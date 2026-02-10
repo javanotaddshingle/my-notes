@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/capsule_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="时间胶囊标题"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="状态："
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/capsule_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="未到解锁时间"
+            android:textSize="14sp"
+            android:textColor="?attr/colorPrimary" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="创建时间："
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/create_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2024-01-01 12:00"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="打开时间："
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/open_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2024-01-02 12:00"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="内容："
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/capsule_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="🔒 时间胶囊尚未解锁"
+        android:textSize="16sp"
+        android:background="@android:color/white"
+        android:padding="16dp"
+        android:elevation="2dp"
+        android:radius="8dp" />
+
+    <TextView
+        android:id="@+id/unlock_button"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="解锁时间胶囊"
+        android:textSize="16sp"
+        android:textColor="@android:color/white"
+        android:background="?attr/colorPrimary"
+        android:gravity="center"
+        android:layout_marginTop="16dp"
+        android:radius="8dp" />
+
+</LinearLayout>
