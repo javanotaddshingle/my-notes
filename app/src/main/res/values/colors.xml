@@ -1,5 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <!-- ========== 白天模式核心色 ========== -->
+    <color name="primary">#FF4CAF50</color>                <!-- 主色：清新绿 -->
+    <color name="primary_variant">#FF388E3C</color>        <!-- 主色深色版 -->
+    <color name="secondary">#FFFF9800</color>              <!-- 辅助色：暖橙 -->
+    <color name="background_light">#FFFAFAFA</color>       <!-- 白天页面背景 -->
+    <color name="surface_light">#FFFFFFFF</color>          <!-- 白天卡片背景 -->
+    <color name="surface_variant_light">#FFEEEEEE</color>  <!-- 白天分割线 -->
+    <color name="on_primary_light">#FFFFFFFF</color>       <!-- 白天主色文字 -->
+    <color name="on_background_light">#FF212121</color>    <!-- 白天背景文字 -->
+    <color name="on_surface_light">#FF424242</color>       <!-- 白天卡片文字 -->
+
+    <!-- ========== 夜间模式核心色 ========== -->
+    <color name="primary_dark">#FF81C784</color>           <!-- 夜间主色：柔和绿 -->
+    <color name="primary_variant_dark">#FF33691E</color>   <!-- 夜间主色深色版 -->
+    <color name="secondary_dark">#FFFFCC80</color>         <!-- 夜间辅助色：柔和橙 -->
+    <color name="background_dark">#FF121212</color>        <!-- 夜间页面背景 -->
+    <color name="surface_dark">#FF1E1E1E</color>           <!-- 夜间卡片背景 -->
+    <color name="surface_variant_dark">#FF2D2D2D</color>   <!-- 夜间分割线 -->
+    <color name="on_primary_dark">#FF003800</color>        <!-- 夜间主色文字 -->
+    <color name="on_background_dark">#FFE0E0E0</color>     <!-- 夜间背景文字 -->
+    <color name="on_surface_dark">#FFF5F5F5</color>        <!-- 夜间卡片文字 -->
+
+    <!-- ========== 全局功能色（白天/夜间通用） ========== -->
+    <color name="color_success">#FF43A047</color>          <!-- 成功色：深绿 -->
+    <color name="color_warning">#FFFFB300</color>          <!-- 警告色：暖黄 -->
+    <color name="color_error">#FFE53935</color>            <!-- 错误色：深红 -->
+    <color name="color_info">#FF1E88E5</color>             <!-- 提示色：天蓝 -->
+
+    <!--豆包最喜欢的神秘系列灰色-->
+    <color name="gray_50">#FFFAFAFA</color>    <!-- 极浅灰：页面背景 -->
+    <color name="gray_100">#FFF5F5F5</color>  <!-- 浅灰：卡片背景 -->
+    <color name="gray_200">#FFEEEEEE</color>  <!-- 浅灰：分割线/输入框边框 -->
+    <color name="gray_300">#FFE0E0E0</color>  <!-- 中浅灰：禁用状态控件 -->
+    <color name="gray_400">#FFBDBDBD</color>  <!-- 中灰：次要文字 -->
+    <color name="gray_500">#FF9E9E9E</color>  <!-- 中深灰：图标默认色 -->
+    <color name="gray_600">#FF757575</color>  <!-- 深灰：辅助文字 -->
+    <color name="gray_700">#FF616161</color>  <!-- 更深灰：主要文字次要层级 -->
+    <color name="gray_800">#FF424242</color>  <!-- 近黑灰：主要文字 -->
+    <color name="gray_900">#FF212121</color>  <!-- 极深灰：标题文字 -->
 </resources>

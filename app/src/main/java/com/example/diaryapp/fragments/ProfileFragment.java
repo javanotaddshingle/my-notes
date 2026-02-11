@@ -1,9 +1,15 @@
+/*
+"我的"页面更换头像和背景功能
+ */
+
+
 package com.example.diaryapp.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ImageView;
@@ -12,6 +18,7 @@ import android.widget.EditText;
 import android.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import com.example.diaryapp.R;
+import com.example.diaryapp.activities.SettingsActivity;
 import com.example.diaryapp.managers.UserManager;
 import com.example.diaryapp.models.User;
 import android.content.Intent;
@@ -33,6 +40,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import android.util.Log;
+
 public class ProfileFragment extends Fragment {
     private static final String TAG = "ProfileFragment";
 
@@ -62,12 +70,19 @@ public class ProfileFragment extends Fragment {
     private ImageView backgroundImageView;
     private TextView userSignatureTextView;
     private TextView userIdTextView;
-    private Button changeAvatarButton;
-    private Button changeBackgroundButton;
-    private Button editProfileButton;
+//    private Button changeAvatarButton;
+//    private Button changeBackgroundButton;
+//    private Button editProfileButton;
+    // 新增LinearLayout声明（和新布局ID对应）
+    private LinearLayout changeAvatarLayout, changeBackgroundLayout, editProfileLayout, settingsLayout;
+
+    // 修复：添加生命周期绑定的Handler
+    private android.os.Handler handler = new android.os.Handler();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // 修复：绑定Activity的Looper
+        handler = new android.os.Handler(requireActivity().getMainLooper());
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
         // 初始化所有Activity Result Launchers（修复核心问题1）
@@ -85,16 +100,30 @@ public class ProfileFragment extends Fragment {
         backgroundImageView = view.findViewById(R.id.background_image);
         userSignatureTextView = view.findViewById(R.id.user_signature);
         userIdTextView = view.findViewById(R.id.user_id);
-        changeAvatarButton = view.findViewById(R.id.change_avatar_button);
-        changeBackgroundButton = view.findViewById(R.id.change_background_button);
-        editProfileButton = view.findViewById(R.id.edit_profile_button);
+//        changeAvatarButton = view.findViewById(R.id.change_avatar_button);
+//        changeBackgroundButton = view.findViewById(R.id.change_background_button);
+//        editProfileButton = view.findViewById(R.id.edit_profile_button);
+        // 新增LinearLayout findViewById（和新布局ID对应）
+        changeAvatarLayout = view.findViewById(R.id.change_avatar_layout);
+        changeBackgroundLayout = view.findViewById(R.id.change_background_layout);
+        editProfileLayout = view.findViewById(R.id.edit_profile_layout);
+        settingsLayout = view.findViewById(R.id.settings_layout); // 新增设置入口
 
         userManager = UserManager.getInstance(requireContext());
 
         // 设置点击事件
-        changeAvatarButton.setOnClickListener(v -> openImagePicker(PICK_IMAGE_REQUEST));
-        changeBackgroundButton.setOnClickListener(v -> openImagePicker(PICK_BACKGROUND_REQUEST));
-        editProfileButton.setOnClickListener(v -> editUserProfile());
+//        changeAvatarButton.setOnClickListener(v -> openImagePicker(PICK_IMAGE_REQUEST));
+//        changeBackgroundButton.setOnClickListener(v -> openImagePicker(PICK_BACKGROUND_REQUEST));
+//        editProfileButton.setOnClickListener(v -> editUserProfile());
+        // 新增LinearLayout点击事件（逻辑和之前完全一样）
+        changeAvatarLayout.setOnClickListener(v -> openImagePicker(PICK_IMAGE_REQUEST));
+        changeBackgroundLayout.setOnClickListener(v -> openImagePicker(PICK_BACKGROUND_REQUEST));
+        editProfileLayout.setOnClickListener(v -> editUserProfile());
+        // 新增设置入口点击事件（跳转到SettingsActivity）
+        settingsLayout.setOnClickListener(v -> {
+            Intent intent = new Intent(requireContext(), SettingsActivity.class);
+            startActivity(intent);
+        });
         userSignatureTextView.setOnClickListener(v -> editUserProfile());
 
         // 首先显示默认值，避免界面空白
@@ -189,7 +218,7 @@ public class ProfileFragment extends Fragment {
     private void openImagePicker(int requestCode) {
         try {
             Log.d(TAG, "打开图片选择器: requestCode=" + requestCode);
-            
+
             // 保存原始请求码
             lastOriginalRequestCode = requestCode;
 
@@ -249,7 +278,7 @@ public class ProfileFragment extends Fragment {
         try {
             Log.d(TAG, "启动裁剪活动: sourceUri=" + sourceUri + ", originalRequestCode=" + originalRequestCode);
             Log.d(TAG, "创建临时输出文件: outputUri=" + outputUri);
-            
+
             Intent cropIntent = new Intent("com.android.camera.action.CROP");
             // 添加URI访问权限
             cropIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
@@ -275,10 +304,10 @@ public class ProfileFragment extends Fragment {
                 Log.d(TAG, "设置背景裁剪参数: 3:2, 1080x720");
             }
 
-            // 关键修复：不使用return-data，改用outputUri（避免内存溢出）
+            // 关键修复：改用系统标准常量，删除自定义MediaStore
+            cropIntent.putExtra("output", outputUri);
             cropIntent.putExtra("scale", true);
             cropIntent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
-            cropIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputUri); // 替换为MediaStore常量
             cropIntent.putExtra("return-data", false); // 关闭return-data
 
             // 检查是否有应用可以处理裁剪Intent
@@ -327,22 +356,22 @@ public class ProfileFragment extends Fragment {
     private String saveImageToInternalStorage(Uri uri) {
         try {
             Log.d(TAG, "开始保存图片到内部存储: uri=" + uri);
-            
+
             // 解码图片时使用BitmapFactory.Options来减少内存使用
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inJustDecodeBounds = true;
             InputStream inputStream = requireContext().getContentResolver().openInputStream(uri);
             BitmapFactory.decodeStream(inputStream, null, options);
             inputStream.close();
-            
+
             Log.d(TAG, "图片尺寸: " + options.outWidth + "x" + options.outHeight);
-            
+
             // 计算采样率
             options.inSampleSize = calculateInSampleSize(options, 1024, 1024);
             options.inJustDecodeBounds = false;
-            
+
             Log.d(TAG, "使用采样率: " + options.inSampleSize);
-            
+
             // 重新解码图片
             inputStream = requireContext().getContentResolver().openInputStream(uri);
             Bitmap bitmap = BitmapFactory.decodeStream(inputStream, null, options);
@@ -352,7 +381,7 @@ public class ProfileFragment extends Fragment {
                 Toast.makeText(requireContext(), "图片解码失败", Toast.LENGTH_SHORT).show();
                 return null;
             }
-            
+
             Log.d(TAG, "图片解码成功: " + bitmap.getWidth() + "x" + bitmap.getHeight());
 
             File directory = new File(requireContext().getFilesDir(), "images");
@@ -369,11 +398,7 @@ public class ProfileFragment extends Fragment {
             outputStream.close();
             inputStream.close();
 
-            // 回收bitmap内存
-            if (!bitmap.isRecycled()) {
-                bitmap.recycle();
-            }
-
+            // 修复：删除手动回收Bitmap的代码
             Log.d(TAG, "图片保存成功: " + file.getAbsolutePath());
             return file.getAbsolutePath();
         } catch (Exception e) {
@@ -399,11 +424,7 @@ public class ProfileFragment extends Fragment {
             outputStream.flush();
             outputStream.close();
 
-            // 回收bitmap内存
-            if (!bitmap.isRecycled()) {
-                bitmap.recycle();
-            }
-
+            // 修复：删除手动回收Bitmap的代码
             return file.getAbsolutePath();
         } catch (Exception e) {
             e.printStackTrace();
@@ -460,10 +481,7 @@ public class ProfileFragment extends Fragment {
                     int y = (bitmap.getHeight() - size) / 2;
                     Bitmap squareBitmap = Bitmap.createBitmap(bitmap, x, y, size, size);
                     imageView.setImageBitmap(squareBitmap);
-                    // 回收原始bitmap
-                    if (!bitmap.isRecycled()) {
-                        bitmap.recycle();
-                    }
+                    // 修复：删除手动回收Bitmap的代码
                 } else {
                     imageView.setImageBitmap(bitmap);
                 }
@@ -542,7 +560,7 @@ public class ProfileFragment extends Fragment {
         userManager.updateUserSignature(signature);
 
         // 延迟一点时间再重新加载用户信息，确保数据库操作已完成
-        new android.os.Handler().postDelayed(() -> {
+        handler.postDelayed(() -> {
             loadUserInfo();
         }, 500);
     }
@@ -551,6 +569,13 @@ public class ProfileFragment extends Fragment {
     public void onResume() {
         super.onResume();
         loadUserInfo(); // 每次返回页面时重新加载数据
+    }
+
+    // 修复：移除Handler回调，避免内存泄漏
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        handler.removeCallbacksAndMessages(null);
     }
 
     private void showDefaultUserInfo() {
@@ -630,10 +655,5 @@ public class ProfileFragment extends Fragment {
                 });
             }
         }).start();
-    }
-
-    // 修复：添加缺失的MediaStore导入兼容
-    private static class MediaStore {
-        public static final String EXTRA_OUTPUT = "output";
     }
 }

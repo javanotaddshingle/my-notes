@@ -1,7 +1,27 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+    <!-- 夜间主题：覆盖白天配色，仅改核心色，功能色复用 -->
     <style name="Base.Theme.DiaryApp" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <!-- 1. 系统标准属性（夜间专属值） -->
+        <item name="colorBackground">@color/background_dark</item>
+        <item name="colorPrimary">@color/primary_dark</item>
+        <item name="colorPrimaryVariant">@color/primary_variant_dark</item>
+        <item name="colorSecondary">@color/secondary_dark</item>
+        <item name="android:windowBackground">@color/background_dark</item>
+        <item name="colorSurface">@color/surface_dark</item>
+        <item name="colorSurfaceVariant">@color/surface_variant_dark</item>
+        <item name="colorOnPrimary">@color/on_primary_dark</item>
+        <item name="colorOnBackground">@color/on_background_dark</item>
+        <item name="colorOnSurface">@color/on_surface_dark</item>
+        <item name="colorError">@color/color_error</item> <!-- 复用错误色 -->
+
+        <!-- 2. 自定义功能色属性（复用白天值，也可改夜间专属） -->
+        <item name="customColorSuccess">@color/color_success</item>
+        <item name="customColorWarning">@color/color_warning</item>
+        <item name="customColorInfo">@color/color_info</item>
     </style>
+
+    <!-- 应用最终主题 -->
+    <style name="Theme.DiaryApp" parent="Base.Theme.DiaryApp" />
 </resources>
+
+    <!--全局颜色配置(晚上)-->

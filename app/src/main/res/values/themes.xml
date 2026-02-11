@@ -1,9 +1,27 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+    <!-- 基础主题：Material3 无ActionBar + 白天配色 -->
     <style name="Base.Theme.DiaryApp" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <!-- 1. 系统标准属性（无报错） -->
+        <!-- 必须显式声明 colorBackground（绑定你定义的背景色） -->
+        <item name="colorBackground">@color/background_light</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/primary_variant</item>
+        <item name="colorSecondary">@color/secondary</item>
+        <item name="android:windowBackground">@color/background_light</item>
+        <item name="colorSurface">@color/surface_light</item>
+        <item name="colorSurfaceVariant">@color/surface_variant_light</item>
+        <item name="colorOnPrimary">@color/on_primary_light</item>
+        <item name="colorOnBackground">@color/on_background_light</item>
+        <item name="colorOnSurface">@color/on_surface_light</item>
+        <item name="colorError">@color/color_error</item> <!-- 系统标准错误色 -->
+
+        <!-- 2. 自定义功能色属性（已在attrs.xml声明，无报错） -->
+        <item name="customColorSuccess">@color/color_success</item>
+        <item name="customColorWarning">@color/color_warning</item>
+        <item name="customColorInfo">@color/color_info</item>
     </style>
 
+    <!-- 应用最终主题 -->
     <style name="Theme.DiaryApp" parent="Base.Theme.DiaryApp" />
 </resources>
+<!--全局颜色配置(白天)-->

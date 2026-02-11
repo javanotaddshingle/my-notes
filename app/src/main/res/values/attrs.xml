@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 自定义功能色属性（提前声明，主题中绑定不会报错） -->
+    <attr name="customColorSuccess" format="color" />
+    <attr name="customColorWarning" format="color" />
+    <attr name="customColorInfo" format="color" />
+    
+    <!-- 主题属性（用于布局文件中引用主题颜色） -->
+    <attr name="colorBackground" format="color" />
+    <attr name="colorSurface" format="color" />
+    <attr name="colorSurfaceVariant" format="color" />
+    <attr name="colorPrimary" format="color" />
+    <attr name="colorOnSurface" format="color" />
+</resources>

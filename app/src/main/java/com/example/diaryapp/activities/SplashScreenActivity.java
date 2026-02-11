@@ -1,3 +1,7 @@
+/*
+启动页面
+ */
+
 package com.example.diaryapp.activities;
 
 import android.content.Intent;

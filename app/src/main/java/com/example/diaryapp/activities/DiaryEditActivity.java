@@ -1,3 +1,7 @@
+/*
+写日记功能
+ */
+
 package com.example.diaryapp.activities;
 
 import android.os.Bundle;

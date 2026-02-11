@@ -1,3 +1,8 @@
+/*
+打卡功能实现
+ */
+
+
 package com.example.diaryapp.activities;
 
 import android.os.Bundle;

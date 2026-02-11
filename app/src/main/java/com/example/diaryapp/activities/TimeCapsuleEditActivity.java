@@ -1,3 +1,7 @@
+/*
+时间胶囊功能
+ */
+
 package com.example.diaryapp.activities;
 
 import android.app.DatePickerDialog;

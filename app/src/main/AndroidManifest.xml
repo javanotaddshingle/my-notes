@@ -23,14 +23,14 @@
 
         <!-- 新增：FileProvider配置（核心修改） -->
         <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="com.example.diaryapp.fileprovider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
-        </provider>
+        android:name="androidx.core.content.FileProvider"
+        android:authorities="com.example.diaryapp.fileprovider"
+        android:exported="false"
+        android:grantUriPermissions="true">
+        <meta-data
+            android:name="android.support.FILE_PROVIDER_PATHS"
+            android:resource="@xml/file_paths" />
+    </provider>
 
         <activity
             android:name=".activities.SplashScreenActivity"
@@ -55,6 +55,9 @@
             android:exported="false" />
         <activity
             android:name=".activities.TimeCapsuleDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.SettingsActivity"
             android:exported="false" />
     </application>
 
