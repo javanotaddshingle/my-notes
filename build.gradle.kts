@@ -2,6 +2,3 @@
 plugins {
     alias(libs.plugins.android.application) apply false
 }
-
-// 咕咕嘎嘎咕咕嘎嘎咕咕嘎嘎
-// //
