@@ -10,9 +10,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="时间胶囊"
-        android:textSize="24sp"
+        android:textSize="22sp"
         android:textStyle="bold"
-        android:layout_marginBottom="16dp" />
+        android:textColor="?attr/colorOnBackground"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center_vertical" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/time_capsule_list"

@@ -12,12 +12,18 @@
         <item name="colorOnPrimary">@color/on_primary_dark</item>
         <item name="colorOnBackground">@color/on_background_dark</item>
         <item name="colorOnSurface">@color/on_surface_dark</item>
+        <item name="colorOnSurfaceVariant">@color/gray_400</item>
         <item name="colorError">@color/color_error</item>
 
         <!-- 2. 自定义功能色（复用或改夜间值都可） -->
         <item name="customColorSuccess">@color/color_success</item>
         <item name="customColorWarning">@color/color_warning</item>
         <item name="customColorInfo">@color/color_info</item>
+        
+        <!-- 3. 底部导航栏颜色（夜间模式 - 更亮以提高对比度） -->
+        <item name="colorControlNormal">@color/nav_icon_unselected_dark</item>
+        <item name="colorControlActivated">@color/nav_icon_selected_dark</item>
+        <item name="android:textColorSecondary">@color/nav_icon_unselected_dark</item>
 
         <!-- 3. 夜间版状态栏配置（核心修正：文字改白色） -->
         <item name="android:windowTranslucentStatus">true</item>

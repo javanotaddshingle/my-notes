@@ -30,4 +30,7 @@ public interface CheckInRecordDao {
 
     @Query("SELECT * FROM check_in_records WHERE itemId = :itemId ORDER BY checkInDate DESC")
     List<CheckInRecord> getCheckInRecordsByItemId(long itemId);
+
+    @Query("SELECT * FROM check_in_records ORDER BY checkInDate DESC")
+    List<CheckInRecord> getAllRecords();
 }

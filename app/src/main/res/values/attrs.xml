@@ -11,4 +11,5 @@
     <attr name="colorSurfaceVariant" format="color" />
     <attr name="colorPrimary" format="color" />
     <attr name="colorOnSurface" format="color" />
+    <attr name="colorOnSurfaceVariant" format="color" />
 </resources>

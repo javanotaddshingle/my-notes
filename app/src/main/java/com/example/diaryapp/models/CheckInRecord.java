@@ -1,6 +1,7 @@
 package com.example.diaryapp.models;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.util.Date;
@@ -15,6 +16,13 @@ public class CheckInRecord {
 
     public CheckInRecord(long itemId, Date checkInDate, Date completedAt) {
         this.itemId = itemId;
+        this.checkInDate = checkInDate;
+        this.completedAt = completedAt;
+    }
+
+    @Ignore
+    public CheckInRecord(Date checkInDate, Date completedAt) {
+        this.itemId = 0;
         this.checkInDate = checkInDate;
         this.completedAt = completedAt;
     }

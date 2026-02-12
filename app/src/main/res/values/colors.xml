@@ -46,4 +46,10 @@
     <color name="btn_plus_orange_yellow">#FFB74D</color>
     <!-- 白色（+号文字/图标用） -->
     <color name="white">#FFFFFF</color>
+    
+    <!-- 底部导航栏图标颜色 -->
+    <color name="nav_icon_unselected_light">#FF9E9E9E</color>  <!-- 白天未选中：中灰 -->
+    <color name="nav_icon_selected_light">#FF4CAF50</color>   <!-- 白天选中：主色绿 -->
+    <color name="nav_icon_unselected_dark">#FFBDBDBD</color>   <!-- 夜间未选中：亮灰 -->
+    <color name="nav_icon_selected_dark">#FF81C784</color>    <!-- 夜间选中：柔和绿 -->
 </resources>
