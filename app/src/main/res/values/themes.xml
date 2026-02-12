@@ -23,5 +23,17 @@
 
     <!-- 应用最终主题 -->
     <style name="Theme.DiaryApp" parent="Base.Theme.DiaryApp" />
+
+    <!-- 启动页专属主题：移除默认红色/图标背景 -->
+    <style name="SplashTheme" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="android:windowBackground">@drawable/gradient_splash_bg</item> <!-- 渐变背景 -->
+        <item name="windowNoTitle">true</item>          <!-- 隐藏标题栏 -->
+        <item name="windowActionBar">false</item>       <!-- 隐藏ActionBar -->
+<!--        <item name="android:windowFullscreen">true</item> &lt;!&ndash; 全屏显示（可选，去掉状态栏） &ndash;&gt;-->
+        <!-- 适配Android 5.0+：状态栏透明，彻底去掉顶层黑色 -->
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+    </style>
 </resources>
 <!--全局颜色配置(白天)-->

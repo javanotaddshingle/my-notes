@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <gradient
+        android:type="linear"
+        android:startColor="#FFFFFF"
+    android:endColor="#FF9800"
+    android:angle="45"/>           <!-- 渐变角度，可改90/135调整方向 -->
+</shape>
+<!--    全屏橙白渐变背景文件-->
+<!--    新建 / 替换文件：res/drawable/gradient_splash_bg.xml（无圆角，适配全屏）-->
