@@ -1,8 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- 基础主题：Material3 无ActionBar + 白天配色 -->
+    <!-- 基础主题：统一用 Material3 体系（核心修改：去掉MaterialComponents） -->
     <style name="Base.Theme.DiaryApp" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- 1. 系统标准属性（无报错） -->
-        <!-- 必须显式声明 colorBackground（绑定你定义的背景色） -->
         <item name="colorBackground">@color/background_light</item>
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryVariant">@color/primary_variant</item>
@@ -13,27 +12,38 @@
         <item name="colorOnPrimary">@color/on_primary_light</item>
         <item name="colorOnBackground">@color/on_background_light</item>
         <item name="colorOnSurface">@color/on_surface_light</item>
-        <item name="colorError">@color/color_error</item> <!-- 系统标准错误色 -->
+        <item name="colorError">@color/color_error</item>
 
-        <!-- 2. 自定义功能色属性（已在attrs.xml声明，无报错） -->
+        <!-- 2. 自定义功能色属性（已在attrs.xml声明） -->
         <item name="customColorSuccess">@color/color_success</item>
         <item name="customColorWarning">@color/color_warning</item>
         <item name="customColorInfo">@color/color_info</item>
+
+        <!-- 状态栏透明基础配置（移到Base，所有子主题自动继承） -->
+        <item name="android:windowTranslucentStatus" tools:targetApi="19">true</item>
+        <item name="android:statusBarColor" tools:targetApi="21">@android:color/transparent</item>
+        <item name="android:windowDrawsSystemBarBackgrounds" tools:targetApi="21">true</item>
+        <item name="android:fitsSystemWindows">false</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
     </style>
 
-    <!-- 应用最终主题 -->
-    <style name="Theme.DiaryApp" parent="Base.Theme.DiaryApp" />
+    <!-- 白天版主题：继承Base主题（核心修改），保留Material3体系 -->
+    <style name="Theme.DiaryApp" parent="Base.Theme.DiaryApp">
+        <!-- 无需重复写状态栏配置，自动继承Base的 -->
+        <!-- 若有白天版专属配置，加在这里即可 -->
+    </style>
 
-    <!-- 启动页专属主题：移除默认红色/图标背景 -->
-    <style name="SplashTheme" parent="Theme.MaterialComponents.NoActionBar">
-        <item name="android:windowBackground">@drawable/gradient_splash_bg</item> <!-- 渐变背景 -->
-        <item name="windowNoTitle">true</item>          <!-- 隐藏标题栏 -->
-        <item name="windowActionBar">false</item>       <!-- 隐藏ActionBar -->
-<!--        <item name="android:windowFullscreen">true</item> &lt;!&ndash; 全屏显示（可选，去掉状态栏） &ndash;&gt;-->
-        <!-- 适配Android 5.0+：状态栏透明，彻底去掉顶层黑色 -->
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+    <!-- 启动页专属主题：继承Material3无ActionBar（统一体系） -->
+    <style name="SplashTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowBackground">@drawable/gradient_splash_bg</item>
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+
+        <!-- 状态栏透明配置（和Base保持一致） -->
+        <item name="android:windowTranslucentStatus" tools:targetApi="19">true</item>
+        <item name="android:statusBarColor" tools:targetApi="21">@android:color/transparent</item>
+        <item name="android:windowDrawsSystemBarBackgrounds" tools:targetApi="21">true</item>
+        <item name="android:fitsSystemWindows">false</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
     </style>
 </resources>
-<!--全局颜色配置(白天)-->

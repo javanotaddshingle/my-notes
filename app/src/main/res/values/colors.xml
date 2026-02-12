@@ -39,4 +39,11 @@
     <color name="gray_700">#FF616161</color>  <!-- 更深灰：主要文字次要层级 -->
     <color name="gray_800">#FF424242</color>  <!-- 近黑灰：主要文字 -->
     <color name="gray_900">#FF212121</color>  <!-- 极深灰：标题文字 -->
+
+    <!-- 新增：底部导航栏浅橙色（可自行调整#FFCC80为更浅/更深的橙色） -->
+    <color name="navigation_bar_light_orange">#FFCC80</color>
+    <!-- 新增：+号按钮橙黄色背景 -->
+    <color name="btn_plus_orange_yellow">#FFB74D</color>
+    <!-- 白色（+号文字/图标用） -->
+    <color name="white">#FFFFFF</color>
 </resources>

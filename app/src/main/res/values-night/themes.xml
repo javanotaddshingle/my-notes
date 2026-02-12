@@ -1,4 +1,17 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- 夜间版：values/themes/themes.xml(night) -->
+    <style name="Theme.DiaryApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- 完全复制白天版的状态栏配置，确保夜间模式也透明 -->
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:fitsSystemWindows">false</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
+
+        <!-- 其他夜间模式专属配置（如背景色/文字色）保留 -->
+    </style>
+
+
     <!-- 夜间主题：覆盖白天配色，仅改核心色，功能色复用 -->
     <style name="Base.Theme.DiaryApp" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- 1. 系统标准属性（夜间专属值） -->
@@ -18,10 +31,15 @@
         <item name="customColorSuccess">@color/color_success</item>
         <item name="customColorWarning">@color/color_warning</item>
         <item name="customColorInfo">@color/color_info</item>
+
+        <!-- 完全复制白天版的状态栏配置，确保夜间模式也透明 -->
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:fitsSystemWindows">false</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
     </style>
 
-    <!-- 应用最终主题 -->
-    <style name="Theme.DiaryApp" parent="Base.Theme.DiaryApp" />
 </resources>
 
     <!--全局颜色配置(晚上)-->
