@@ -3,7 +3,7 @@
     <!-- ========== 白天模式核心色 ========== -->
     <color name="primary">#FF4CAF50</color>                <!-- 主色：清新绿 -->
     <color name="primary_variant">#FF388E3C</color>        <!-- 主色深色版 -->
-    <color name="secondary">#FFFF9800</color>              <!-- 辅助色：暖橙 -->
+    <color name="secondary">#FFFF9800</color>              <!-- 辅助色：暖橙 --> <!--这个颜色是所有按钮的背景色-->
     <color name="background_light">#FFFAFAFA</color>       <!-- 白天页面背景 -->
     <color name="surface_light">#FFFFFFFF</color>          <!-- 白天卡片背景 -->
     <color name="surface_variant_light">#FFEEEEEE</color>  <!-- 白天分割线 -->

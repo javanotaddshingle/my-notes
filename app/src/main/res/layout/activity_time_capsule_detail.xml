@@ -105,7 +105,7 @@
         android:text="解锁时间胶囊"
         android:textSize="16sp"
         android:textColor="@android:color/white"
-        android:background="?attr/colorPrimary"
+        android:background="@color/secondary"
         android:gravity="center"
         android:layout_marginTop="16dp"
         android:radius="8dp" />

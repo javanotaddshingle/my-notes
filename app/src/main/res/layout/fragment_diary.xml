@@ -27,6 +27,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:src="@android:drawable/ic_input_add"
-        android:backgroundTint="?attr/colorPrimary" />
+        android:backgroundTint="@color/secondary"
+        app:tint = "@android:color/white"/>
 
 </LinearLayout>

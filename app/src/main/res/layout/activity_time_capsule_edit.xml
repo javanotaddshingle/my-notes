@@ -82,7 +82,7 @@
             android:text="保存"
             android:textSize="16sp"
             android:textColor="@android:color/white"
-            android:background="?attr/colorPrimary"
+            android:background="@color/secondary"
             android:gravity="center"
             android:layout_marginStart="8dp"
             android:radius="8dp" />
