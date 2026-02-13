@@ -13,7 +13,7 @@
         android:textSize="22sp"
         android:textStyle="bold"
         android:textColor="?attr/colorOnBackground"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="40dp"
         android:layout_marginBottom="20dp"
         android:gravity="center_vertical"
         android:paddingStart="16dp"
@@ -57,8 +57,8 @@
                             android:id="@+id/moling_image"
                             android:layout_width="80dp"
                             android:layout_height="80dp"
-                            android:src="@drawable/ic_moling_normal"
-                            android:contentDescription="墨灵小精灵" />
+                            android:contentDescription="墨灵小精灵"
+                            android:src="@drawable/ic_moling_normal" />
 
                     </FrameLayout>
 
@@ -141,7 +141,7 @@
                             android:text="0天"
                             android:textSize="24sp"
                             android:textStyle="bold"
-                            android:textColor="?attr/colorPrimary"
+                            android:textColor="?attr/colorOnSurface"
                             android:layout_marginTop="4dp" />
 
                     </LinearLayout>
@@ -157,26 +157,26 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:gravity="center">
+                        android:gravity="center"
+                        android:orientation="vertical">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:alpha="0.7"
                             android:text="本月打卡"
-                            android:textSize="12sp"
                             android:textColor="?attr/colorOnSurface"
-                            android:alpha="0.7" />
+                            android:textSize="12sp" />
 
                         <TextView
                             android:id="@+id/month_check_ins"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
                             android:text="0天"
+                            android:textColor="?attr/colorOnSurface"
                             android:textSize="24sp"
-                            android:textStyle="bold"
-                            android:textColor="?attr/colorPrimary"
-                            android:layout_marginTop="4dp" />
+                            android:textStyle="bold" />
 
                     </LinearLayout>
 
@@ -212,13 +212,13 @@
                         android:layout_marginStart="12dp"
                         android:orientation="vertical">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="时间胶囊"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            android:textColor="?attr/colorOnSurface" />
+<!--                        <TextView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:text="时间胶囊"-->
+<!--                            android:textSize="14sp"-->
+<!--                            android:textStyle="bold"-->
+<!--                            android:textColor="?attr/colorOnSurface" />-->
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -237,7 +237,7 @@
                         android:text="0个"
                         android:textSize="18sp"
                         android:textStyle="bold"
-                        android:textColor="?attr/colorPrimary"
+                        android:textColor="?attr/colorOnSurface"
                         android:layout_marginEnd="8dp" />
 
                     <ImageView
@@ -250,6 +250,25 @@
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="打卡项目"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="?attr/colorOnBackground"
+                android:layout_marginTop="1dp"
+                android:layout_marginBottom="12dp" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/check_in_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -294,27 +313,14 @@
                     <CalendarView
                         android:id="@+id/check_in_calendar"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:showWeekNumber="false"
+                        android:focusedMonthDateColor="#f00"
+                        android:weekDayTextAppearance="@style/CalendarWeekText"/>
 
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="打卡项目"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="?attr/colorOnBackground"
-                android:layout_marginTop="24dp"
-                android:layout_marginBottom="12dp" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/check_in_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="false" />
 
         </LinearLayout>
 

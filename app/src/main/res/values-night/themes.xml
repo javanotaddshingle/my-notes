@@ -3,7 +3,7 @@
     <style name="Base.Theme.DiaryApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- 1. 夜间模式专属配色（核心：覆盖白天的浅色，适配深色模式） -->
         <item name="colorBackground">@color/background_dark</item>
-        <item name="colorPrimary">@color/primary_dark</item>
+        <item name="colorPrimary">@color/secondary</item>
         <item name="colorPrimaryVariant">@color/primary_variant_dark</item>
         <item name="colorSecondary">@color/secondary_dark</item>
         <item name="android:windowBackground">@color/background_dark</item>
@@ -32,10 +32,14 @@
         <item name="android:fitsSystemWindows">false</item>
         <!-- 夜间模式：状态栏文字设为白色（暗背景下黑色看不清） -->
         <item name="android:windowLightStatusBar" tools:targetApi="23">false</item>
+
+        <!--        由于日记标题内容等信息，背景不是主题色而是主题反色-->
+        <item name="colorDiaryText" tools:targetApi="23">#FF121212</item>>
     </style>
 
     <!-- 最终生效的夜间主题：继承Base，自动获取所有配置 -->
     <style name="Theme.DiaryApp" parent="Base.Theme.DiaryApp">
         <!-- 无需重复写任何配置，全部继承Base即可 -->
     </style>
+
 </resources>

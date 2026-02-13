@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!--这是日记列表里一条日记的单独的样子-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -22,7 +24,8 @@
             android:layout_weight="1"
             android:text="日记标题"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="?attr/colorDiaryText"/>
 
         <TextView
             android:id="@+id/delete_button"
@@ -42,7 +45,8 @@
         android:textSize="14sp"
         android:layout_marginBottom="8dp"
         android:ellipsize="end"
-        android:maxLines="2" />
+        android:maxLines="2"
+        android:textColor="?attr/colorDiaryText"/>
 
     <TextView
         android:id="@+id/diary_date"
@@ -50,6 +54,6 @@
         android:layout_height="wrap_content"
         android:text="2024-01-01 12:00"
         android:textSize="12sp"
-        android:textColor="@android:color/darker_gray" />
+        android:textColor="?attr/colorDiaryText" />
 
 </LinearLayout>

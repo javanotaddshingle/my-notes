@@ -15,7 +15,8 @@
         android:text="应用设置"
         android:textSize="20sp"
         android:textColor="?attr/colorOnBackground"
-        android:layout_marginBottom="20dp"/>
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="30dp"/>
 
     <!-- 夜间模式切换项 -->
     <androidx.cardview.widget.CardView
@@ -46,7 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="false"
-                android:thumbTint="@color/primary"
+                android:thumbTint="@color/secondary"
                 android:trackTint="@color/gray_300"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>

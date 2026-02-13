@@ -12,4 +12,9 @@
     <attr name="colorPrimary" format="color" />
     <attr name="colorOnSurface" format="color" />
     <attr name="colorOnSurfaceVariant" format="color" />
+
+    <!--        由于日记标题内容等信息，背景不是主题色而是主题反色-->
+    <attr name="colorDiaryText" format="color" />
 </resources>
+
+<!--attrs.xml文件里放的是自定义颜色的定义，这些自定义颜色将在themes.xml中被赋值-->

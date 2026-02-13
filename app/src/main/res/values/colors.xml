@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- ========== 白天模式核心色 ========== -->
-    <color name="primary">#FF4CAF50</color>                <!-- 主色：清新绿 -->
+    <color name="primary">#FFE0B2</color>                <!-- 主题色： 背景、提示框底色-->
     <color name="primary_variant">#FF388E3C</color>        <!-- 主色深色版 -->
-    <color name="secondary">#FFFF9800</color>              <!-- 辅助色：暖橙 --> <!--这个颜色是所有按钮的背景色-->
+    <color name="secondary">#FF9800</color>              <!-- 辅助色：暖橙 --> <!--这个颜色是所有按钮的背景色-->
     <color name="background_light">#FFFAFAFA</color>       <!-- 白天页面背景 -->
     <color name="surface_light">#FFFFFFFF</color>          <!-- 白天卡片背景 -->
     <color name="surface_variant_light">#FFEEEEEE</color>  <!-- 白天分割线 -->
@@ -48,8 +48,8 @@
     <color name="white">#FFFFFF</color>
     
     <!-- 底部导航栏图标颜色 -->
-    <color name="nav_icon_unselected_light">#FF9E9E9E</color>  <!-- 白天未选中：中灰 -->
-    <color name="nav_icon_selected_light">#FF4CAF50</color>   <!-- 白天选中：主色绿 -->
-    <color name="nav_icon_unselected_dark">#FFBDBDBD</color>   <!-- 夜间未选中：亮灰 -->
-    <color name="nav_icon_selected_dark">#FF81C784</color>    <!-- 夜间选中：柔和绿 -->
+    <color name="nav_icon_unselected_light">#FFAB40</color>  <!-- 白天未选中：中灰 -->
+    <color name="nav_icon_selected_light">#FFAB40</color>   <!-- 白天选中：主色绿 -->
+    <color name="nav_icon_unselected_dark">#FFAB40</color>   <!-- 夜间未选中：亮灰 -->
+    <color name="nav_icon_selected_dark">#FFAB40</color>    <!-- 夜间选中：柔和绿 -->
 </resources>

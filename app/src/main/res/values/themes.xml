@@ -4,6 +4,8 @@
         <!-- 1. 系统标准属性（无报错） -->
         <item name="colorBackground">@color/background_light</item>
         <item name="colorPrimary">@color/primary</item>
+        <!-- 主色调（影响下划线、按钮默认色） -->
+
         <item name="colorPrimaryVariant">@color/primary_variant</item>
         <item name="colorSecondary">@color/secondary</item>
         <item name="android:windowBackground">@color/background_light</item>
@@ -12,6 +14,8 @@
         <item name="colorOnPrimary">@color/on_primary_light</item>
         <item name="colorOnBackground">@color/on_background_light</item>
         <item name="colorOnSurface">@color/on_surface_light</item>
+
+
         <item name="colorOnSurfaceVariant">@color/gray_500</item>
         <item name="colorError">@color/color_error</item>
 
@@ -31,6 +35,10 @@
         <item name="android:windowDrawsSystemBarBackgrounds" tools:targetApi="21">true</item>
         <item name="android:fitsSystemWindows">false</item>
         <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
+
+
+        <!--        由于日记标题内容等信息，背景不是主题色而是主题反色-->
+        <item name="colorDiaryText" tools:targetApi="23">#FF121212</item>>
     </style>
 
     <!-- 白天版主题：继承Base主题（核心修改），保留Material3体系 -->
@@ -52,4 +60,12 @@
         <item name="android:fitsSystemWindows">false</item>
         <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
     </style>
+
+
 </resources>
+
+
+<!--    colorPrimary 核心主色调 App 主色调（ActionBar、按钮默认色、EditText 下划线、Tab 栏、导航栏）-->
+<!--    colorSecondary（新版） 强调色 强调色（光标、勾选框、开关、进度条、EditText 选中态、FloatingActionButton）-->
+<!--    android:textColorSecondary  文字c次要色 次要文字色（副标题、辅助说明文字、列表项副标题）-->
+<!--    android:textColorPrimary 主要文字色（正文、标题、TextView 默认文字）-->

@@ -1,2 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <!-- 日历周几文字样式（兼容所有Material主题，无报错） parent 是指继承系统自带的样式-->
+    <style name="CalendarWeekText" parent="TextAppearance.MaterialComponents.Body2">
+        <!-- 核心：引用主题属性，跟随日夜模式 -->
+        <item name="android:textColor">?attr/colorOnSurface</item>
+        <!-- 可选：自定义字号（和系统默认星期文字一致） -->
+        <item name="android:textSize">12sp</item>
+    </style>
+</resources>
+
+<!--这个styles.xml文件中放的是使用themes.xml的颜色，重新定义一个样式，可以在其他地方使用@style/**-->
