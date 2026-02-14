@@ -80,6 +80,8 @@ public class CheckInFragment extends Fragment {
         checkInStatus = view.findViewById(R.id.check_in_status);
         checkInButton = view.findViewById(R.id.check_in_button);
         streakDays = view.findViewById(R.id.streak_days);
+
+//        fragment文件中将布局文件的month_check_ins与本文件的一个变量绑定
         monthCheckIns = view.findViewById(R.id.month_check_ins);
         capsuleCount = view.findViewById(R.id.capsule_count);
         calendarMonth = view.findViewById(R.id.calendar_month);
@@ -284,7 +286,28 @@ public class CheckInFragment extends Fragment {
             }
 
             currentStreak = calculateStreak(allRecords);
-            int monthCount = calculateMonthCount(allRecords);
+
+            // ========== 新增/修改的核心代码 start ==========
+            // 1. 计算本月第一天 00:00:00 的毫秒数
+            Calendar monthCal = Calendar.getInstance();
+            monthCal.set(Calendar.DAY_OF_MONTH, 1); // 本月第一天
+            monthCal.set(Calendar.HOUR_OF_DAY, 0);
+            monthCal.set(Calendar.MINUTE, 0);
+            monthCal.set(Calendar.SECOND, 0);
+            monthCal.set(Calendar.MILLISECOND, 0);
+            long startOfMonth = monthCal.getTimeInMillis();
+
+            // 2. 计算本月最后一天 23:59:59 的毫秒数
+            monthCal.set(Calendar.DAY_OF_MONTH, monthCal.getActualMaximum(Calendar.DAY_OF_MONTH)); // 本月最后一天
+            monthCal.set(Calendar.HOUR_OF_DAY, 23);
+            monthCal.set(Calendar.MINUTE, 59);
+            monthCal.set(Calendar.SECOND, 59);
+            monthCal.set(Calendar.MILLISECOND, 999);
+            long endOfMonth = monthCal.getTimeInMillis();
+
+            // 3. 调用修正后的Dao方法，传入本月起止毫秒数
+            int monthCount = database.checkInRecordDao().getMonthCheckInDaysCount(startOfMonth, endOfMonth);
+            // ========== 新增/修改的核心代码 end ==========
 
             requireActivity().runOnUiThread(() -> {
                 streakDays.setText(currentStreak + "天");
@@ -323,21 +346,21 @@ public class CheckInFragment extends Fragment {
         return streak;
     }
 
-    private int calculateMonthCount(List<CheckInRecord> records) {
-        Calendar now = Calendar.getInstance();
-        int currentMonth = now.get(Calendar.MONTH);
-        int currentYear = now.get(Calendar.YEAR);
-
-        int count = 0;
-        Calendar cal = Calendar.getInstance();
-        for (CheckInRecord record : records) {
-            cal.setTime(record.getCheckInDate());
-            if (cal.get(Calendar.MONTH) == currentMonth && cal.get(Calendar.YEAR) == currentYear) {
-                count++;
-            }
-        }
-        return count;
-    }
+//    private int calculateMonthCount(List<CheckInRecord> records) {
+//        Calendar now = Calendar.getInstance();
+//        int currentMonth = now.get(Calendar.MONTH);
+//        int currentYear = now.get(Calendar.YEAR);
+//
+//        int count = 0;
+//        Calendar cal = Calendar.getInstance();
+//        for (CheckInRecord record : records) {
+//            cal.setTime(record.getCheckInDate());
+//            if (cal.get(Calendar.MONTH) == currentMonth && cal.get(Calendar.YEAR) == currentYear) {
+//                count++;
+//            }
+//        }
+//        return count;
+//    }
 
     private void loadCapsuleCount() {
         new Thread(() -> {

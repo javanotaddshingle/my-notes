@@ -167,7 +167,7 @@
                             android:text="本月打卡"
                             android:textColor="?attr/colorOnSurface"
                             android:textSize="12sp" />
-
+<!--android:id是枢纽-->
                         <TextView
                             android:id="@+id/month_check_ins"
                             android:layout_width="wrap_content"

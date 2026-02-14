@@ -33,4 +33,11 @@ public interface CheckInRecordDao {
 
     @Query("SELECT * FROM check_in_records ORDER BY checkInDate DESC")
     List<CheckInRecord> getAllRecords();
+
+
+//    之前的getAllRecords()方法没有对打卡记录的日记进行去重，新增对日期去重的计算逻辑
+    @Query("SELECT COUNT(DISTINCT date(checkInDate / 1000, 'unixepoch')) " +
+            "FROM check_in_records " +
+            "WHERE checkInDate >= :startOfMonth AND checkInDate <= :endOfMonth")
+    int getMonthCheckInDaysCount(long startOfMonth, long endOfMonth);
 }
