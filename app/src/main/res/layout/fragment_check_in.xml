@@ -310,7 +310,7 @@
 
                     </LinearLayout>
 
-                    <CalendarView
+                    <com.example.diaryapp.views.CheckInCalendarView
                         android:id="@+id/check_in_calendar"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

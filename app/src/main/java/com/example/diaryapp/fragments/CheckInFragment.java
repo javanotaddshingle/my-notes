@@ -4,13 +4,12 @@ import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.CalendarView;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.cardview.widget.CardView;
@@ -24,6 +23,7 @@ import com.example.diaryapp.database.AppDatabase;
 import com.example.diaryapp.models.CheckInItem;
 import com.example.diaryapp.models.CheckInRecord;
 import com.example.diaryapp.models.TimeCapsule;
+import com.example.diaryapp.views.CheckInCalendarView;
 import com.google.android.material.button.MaterialButton;
 
 import java.text.SimpleDateFormat;
@@ -43,7 +43,7 @@ public class CheckInFragment extends Fragment {
     private List<CheckInItem> checkInItemList;
     private AppDatabase database;
 
-    private ImageView molingImage;
+    private View molingImage; // 修正：统一用View兼容所有ImageView类型
     private TextView molingMessage;
     private TextView checkInStatus;
     private MaterialButton checkInButton;
@@ -51,21 +51,22 @@ public class CheckInFragment extends Fragment {
     private TextView monthCheckIns;
     private TextView capsuleCount;
     private TextView calendarMonth;
-    private CalendarView checkInCalendar;
+    // 自定义日历控件（已导入正确包，无标红）
+    private CheckInCalendarView checkInCalendar;
 
     private Set<Long> checkedInDates;
     private boolean isTodayCheckedIn = false;
     private int currentStreak = 0;
 
     private static final String[] MOLING_MESSAGES = {
-        "今天也要加油哦！",
-        "你是最棒的！",
-        "坚持就是胜利！",
-        "每一天都值得记录！",
-        "相信自己，你可以的！",
-        "小墨灵为你加油！",
-        "今天的你也很优秀！",
-        "保持好心情！"
+            "今天也要加油哦！",
+            "你是最棒的！",
+            "坚持就是胜利！",
+            "每一天都值得记录！",
+            "相信自己，你可以的！",
+            "小墨灵为你加油！",
+            "今天的你也很优秀！",
+            "保持好心情！"
     };
 
     @Override
@@ -81,7 +82,6 @@ public class CheckInFragment extends Fragment {
         checkInButton = view.findViewById(R.id.check_in_button);
         streakDays = view.findViewById(R.id.streak_days);
 
-//        fragment文件中将布局文件的month_check_ins与本文件的一个变量绑定
         monthCheckIns = view.findViewById(R.id.month_check_ins);
         capsuleCount = view.findViewById(R.id.capsule_count);
         calendarMonth = view.findViewById(R.id.calendar_month);
@@ -214,29 +214,18 @@ public class CheckInFragment extends Fragment {
             requireActivity().runOnUiThread(() -> {
                 isTodayCheckedIn = true;
                 updateCheckInUI();
-                molingImage.setImageResource(R.drawable.ic_moling_excited);
+                molingImage.setBackgroundResource(R.drawable.ic_moling_excited); // 修正：兼容View的背景设置
                 molingMessage.setText("打卡成功！太棒了！");
                 Toast.makeText(requireContext(), "打卡成功！", Toast.LENGTH_SHORT).show();
 
                 loadCheckInStatistics();
+                loadCheckedInDates(); // 打卡后立即更新日历
             });
         }).start();
     }
 
     private void setupCalendar() {
-        checkInCalendar.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
-            Calendar calendar = Calendar.getInstance();
-            calendar.set(year, month, dayOfMonth, 0, 0, 0);
-            calendar.set(Calendar.MILLISECOND, 0);
-            long dateMillis = calendar.getTimeInMillis();
-
-            if (checkedInDates.contains(dateMillis)) {
-                Toast.makeText(requireContext(), "这天已经打卡了", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(requireContext(), "这天未打卡", Toast.LENGTH_SHORT).show();
-            }
-        });
-
+        // 自定义日历无需setOnDateChangeListener（保留原生逻辑也可）
         updateCalendarMonth();
     }
 
@@ -250,7 +239,7 @@ public class CheckInFragment extends Fragment {
         loadCheckInItems();
         loadCheckInStatistics();
         loadCapsuleCount();
-        loadCheckedInDates();
+        loadCheckedInDates(); // 加载打卡日期到日历
     }
 
     private void loadCheckInItems() {
@@ -287,27 +276,23 @@ public class CheckInFragment extends Fragment {
 
             currentStreak = calculateStreak(allRecords);
 
-            // ========== 新增/修改的核心代码 start ==========
-            // 1. 计算本月第一天 00:00:00 的毫秒数
+            // 计算本月打卡数（修正后的逻辑）
             Calendar monthCal = Calendar.getInstance();
-            monthCal.set(Calendar.DAY_OF_MONTH, 1); // 本月第一天
+            monthCal.set(Calendar.DAY_OF_MONTH, 1);
             monthCal.set(Calendar.HOUR_OF_DAY, 0);
             monthCal.set(Calendar.MINUTE, 0);
             monthCal.set(Calendar.SECOND, 0);
             monthCal.set(Calendar.MILLISECOND, 0);
             long startOfMonth = monthCal.getTimeInMillis();
 
-            // 2. 计算本月最后一天 23:59:59 的毫秒数
-            monthCal.set(Calendar.DAY_OF_MONTH, monthCal.getActualMaximum(Calendar.DAY_OF_MONTH)); // 本月最后一天
+            monthCal.set(Calendar.DAY_OF_MONTH, monthCal.getActualMaximum(Calendar.DAY_OF_MONTH));
             monthCal.set(Calendar.HOUR_OF_DAY, 23);
             monthCal.set(Calendar.MINUTE, 59);
             monthCal.set(Calendar.SECOND, 59);
             monthCal.set(Calendar.MILLISECOND, 999);
             long endOfMonth = monthCal.getTimeInMillis();
 
-            // 3. 调用修正后的Dao方法，传入本月起止毫秒数
             int monthCount = database.checkInRecordDao().getMonthCheckInDaysCount(startOfMonth, endOfMonth);
-            // ========== 新增/修改的核心代码 end ==========
 
             requireActivity().runOnUiThread(() -> {
                 streakDays.setText(currentStreak + "天");
@@ -346,22 +331,6 @@ public class CheckInFragment extends Fragment {
         return streak;
     }
 
-//    private int calculateMonthCount(List<CheckInRecord> records) {
-//        Calendar now = Calendar.getInstance();
-//        int currentMonth = now.get(Calendar.MONTH);
-//        int currentYear = now.get(Calendar.YEAR);
-//
-//        int count = 0;
-//        Calendar cal = Calendar.getInstance();
-//        for (CheckInRecord record : records) {
-//            cal.setTime(record.getCheckInDate());
-//            if (cal.get(Calendar.MONTH) == currentMonth && cal.get(Calendar.YEAR) == currentYear) {
-//                count++;
-//            }
-//        }
-//        return count;
-//    }
-
     private void loadCapsuleCount() {
         new Thread(() -> {
             List<TimeCapsule> capsules = database.timeCapsuleDao().getAllTimeCapsules();
@@ -372,30 +341,68 @@ public class CheckInFragment extends Fragment {
         }).start();
     }
 
+    // 修正后的loadCheckedInDates（日志正常、变量无标红）
     private void loadCheckedInDates() {
         new Thread(() -> {
+            // 1. 查询所有打卡记录
             List<CheckInRecord> allRecords = database.checkInRecordDao().getAllRecords();
             checkedInDates.clear();
 
-            Calendar cal = Calendar.getInstance();
-            for (CheckInRecord record : allRecords) {
-                cal.setTime(record.getCheckInDate());
-                cal.set(Calendar.HOUR_OF_DAY, 0);
-                cal.set(Calendar.MINUTE, 0);
-                cal.set(Calendar.SECOND, 0);
-                cal.set(Calendar.MILLISECOND, 0);
-                checkedInDates.add(cal.getTimeInMillis());
+//
+//            // for test
+//            checkedInDates.clear();
+//            Calendar cal = Calendar.getInstance();
+//
+//            // test1
+//            cal.set(2026,Calendar.FEBRUARY,10,0,0,0);
+
+            // 日志1：打印数据库记录总数
+            Log.d("日历全链路", "数据库打卡记录数：" + (allRecords == null ? 0 : allRecords.size()));
+
+            // 2. 遍历记录，转换为0点毫秒数并打印日志
+            if (allRecords != null && !allRecords.isEmpty()) {
+                Calendar cal = Calendar.getInstance();
+                for (int i = 0; i < allRecords.size(); i++) {
+                    CheckInRecord record = allRecords.get(i);
+                    if (record == null || record.getCheckInDate() == null) continue;
+
+                    // 转换为0点毫秒数
+                    cal.setTime(record.getCheckInDate());
+                    cal.set(Calendar.HOUR_OF_DAY, 0);
+                    cal.set(Calendar.MINUTE, 0);
+                    cal.set(Calendar.SECOND, 0);
+                    cal.set(Calendar.MILLISECOND, 0);
+                    long dateMillis = cal.getTimeInMillis();
+                    checkedInDates.add(dateMillis);
+
+                    // 日志2：打印单条记录的信息（临时变量定义正确）
+                    Log.d("日历全链路", "第" + i + "条记录 - 毫秒数：" + dateMillis + "，日期：" + record.getCheckInDate());
+                }
             }
 
+
+            // ========== 只加这3行测试代码（核心！测试完删掉就恢复） ==========
+            Calendar testCal = Calendar.getInstance();
+            testCal.set(2026, Calendar.FEBRUARY, 10, 0, 0, 0); // 手动加2月10日打卡
+            checkedInDates.add(testCal.getTimeInMillis());
+            // 想加几天就多复制两行，比如再加2月18日：
+            // testCal.set(2026, Calendar.FEBRUARY, 18, 0, 0, 0);
+            // checkedInDates.add(testCal.getTimeInMillis());
+
+
+            // 3. 主线程更新日历（确保控件非空）
             requireActivity().runOnUiThread(() -> {
-                updateCalendarView();
+                if (checkInCalendar == null) {
+                    Log.e("日历全链路", "日历控件为空！绑定失败");
+                    return;
+                }
+                // 日志3：打印传给日历的日期数
+                Log.d("日历全链路", "传给日历的打卡日期数：" + checkedInDates.size());
+                // 关键：传递日期并触发重绘
+                checkInCalendar.setCheckedInDates(checkedInDates);
+                checkInCalendar.setDate(System.currentTimeMillis(), false, true);
             });
         }).start();
-    }
-
-    private void updateCalendarView() {
-        CalendarView calendarView = checkInCalendar;
-        calendarView.setDate(System.currentTimeMillis(), false, true);
     }
 
     private void updateCheckInUI() {
@@ -432,6 +439,6 @@ public class CheckInFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        loadAllData();
+        loadAllData(); // 页面恢复时重新加载所有数据
     }
 }
