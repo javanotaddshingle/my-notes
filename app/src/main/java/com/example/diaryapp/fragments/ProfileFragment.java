@@ -108,7 +108,10 @@ public class ProfileFragment extends Fragment {
         changeBackgroundLayout = view.findViewById(R.id.change_background_layout);
         editProfileLayout = view.findViewById(R.id.edit_profile_layout);
         settingsLayout = view.findViewById(R.id.settings_layout); // 新增设置入口
-
+//        本质：getInstance是封装的静态方法，内部会判断：
+//✅ 首次调用：执行new UserManager(context)创建实例；
+//✅ 非首次：直接返回已创建的实例；
+//        核心目的：保证 APP 里只有 1 个 UserManager，避免多实例导致用户数据不一致。
         userManager = UserManager.getInstance(requireContext());
 
         // 设置点击事件
@@ -317,7 +320,7 @@ public class ProfileFragment extends Fragment {
             } else {
                 // 没有裁剪应用，直接使用原图
                 Log.e(TAG, "没有可用的裁剪应用");
-                Toast.makeText(requireContext(), "没有可用的裁剪应用，将使用原图", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(requireContext(), "没有可用的裁剪应用，将使用原图", Toast.LENGTH_SHORT).show();
                 handleImageWithoutCrop(sourceUri, originalRequestCode);
             }
         } catch (Exception e) {
@@ -336,12 +339,12 @@ public class ProfileFragment extends Fragment {
                 if (originalRequestCode == PICK_IMAGE_REQUEST) {
                     updateUserAvatar(imagePath);
                     loadScaledImage(imagePath, avatarImageView, 200, 200);
-                    Toast.makeText(requireContext(), "头像更新成功（未裁剪）", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), "头像更新成功", Toast.LENGTH_SHORT).show();
                 } else if (originalRequestCode == PICK_BACKGROUND_REQUEST) {
                     updateUserBackground(imagePath);
                     loadScaledImage(imagePath, backgroundImageView, 1080, 720);
                     backgroundImageView.setVisibility(View.VISIBLE);
-                    Toast.makeText(requireContext(), "背景更新成功（未裁剪）", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), "背景更新成功", Toast.LENGTH_SHORT).show();
                 }
             } else {
                 Toast.makeText(requireContext(), "保存图片失败", Toast.LENGTH_SHORT).show();

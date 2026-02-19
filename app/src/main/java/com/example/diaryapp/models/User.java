@@ -1,3 +1,5 @@
+//models（也常写成model）是开发者自定义的文件夹，本质是数据的 “容器” 目录—— 专门放那些用来描述 “业务实体” 的类，比如日记、用户、打卡记录等。简单说：APP 里要处理的 “数据长什么样”，都在这个文件夹里定义。
+
 package com.example.diaryapp.models;
 
 import androidx.room.Entity;

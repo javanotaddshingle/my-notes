@@ -30,8 +30,12 @@ import com.example.diaryapp.database.AppDatabase;
 import com.example.diaryapp.models.CheckInItem;
 import com.example.diaryapp.models.CheckInRecord;
 import com.example.diaryapp.models.TimeCapsule;
+import com.example.diaryapp.models.User;
 import com.example.diaryapp.views.CheckInCalendarView;
 import com.google.android.material.button.MaterialButton;
+
+//import com.example.diaryapp.managers.UserManager;
+
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -70,6 +74,9 @@ public class CheckInFragment extends Fragment {
     private static final long UPDATE_DELAY_MS = 300;
     private static final long MAX_UPDATE_DELAY_MS = 1000;
 
+    // 用于测试获取用户等级
+//    private UserManager usermanager;
+
     private static final String[] MOLING_MESSAGES = {
             "今天也要加油哦！",
             "你是最棒的！",
@@ -91,6 +98,9 @@ public class CheckInFragment extends Fragment {
         molingImage = view.findViewById(R.id.moling_image);
         molingMessage = view.findViewById(R.id.moling_message);
         checkInStatus = view.findViewById(R.id.check_in_status);
+        // 逻辑层按钮和界面层按钮绑定
+//        findViewById() 是 Android 系统提供的核心查找方法，作用就像：
+//        你告诉它 “我要找界面上 ID 是 xxx 的控件”，它就去当前view对应的界面布局里，把这个控件 “找出来” 并返回给你。
         checkInButton = view.findViewById(R.id.check_in_button);
         streakDays = view.findViewById(R.id.streak_days);
 
@@ -208,10 +218,11 @@ public class CheckInFragment extends Fragment {
                 .start();
     }
 
+//    v -> { ... }：Kotlin/Java8 的Lambda 表达式（简化匿名内部类），v是被点击的按钮对象，->后是点击后要做的事。
     private void setupCheckInButton() {
         checkInButton.setOnClickListener(v -> {
             if (isTodayCheckedIn) {
-                Toast.makeText(requireContext(), "今天已经打卡啦！", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), "今天已经打卡了哦，明天再来吧", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -219,19 +230,20 @@ public class CheckInFragment extends Fragment {
         });
     }
 
+    // 执行打卡逻辑
     private void performCheckIn() {
         new Thread(() -> {
             Date today = getTodayDate();
             CheckInRecord record = new CheckInRecord(today, new Date());
             database.checkInRecordDao().insert(record);
-
+            // 获取当前fragment绑定的activity再开线程，{}都将并入界面，更新线程
             requireActivity().runOnUiThread(() -> {
                 isTodayCheckedIn = true;
                 updateCheckInUI();
                 performCheckInSuccessAnimation();
                 molingImage.setBackgroundResource(R.drawable.ic_moling_excited);
                 molingMessage.setText("打卡成功！太棒了！");
-                Toast.makeText(requireContext(), "打卡成功！", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), "今日已打卡！", Toast.LENGTH_SHORT).show();
 
                 performImmediateUpdate();
             });
@@ -304,6 +316,9 @@ public class CheckInFragment extends Fragment {
 
     private void loadCheckInStatistics() {
         new Thread(() -> {
+            // 单一实例化
+//            usermanager = UserManager.getInstance(getContext());
+
             List<CheckInRecord> allRecords = database.checkInRecordDao().getAllRecords();
             Date today = getTodayDate();
             isTodayCheckedIn = false;
@@ -342,6 +357,8 @@ public class CheckInFragment extends Fragment {
             long endOfMonth = monthCal.getTimeInMillis();
 
             int monthCount = database.checkInRecordDao().getMonthCheckInDaysCount(startOfMonth, endOfMonth);
+//            User user = usermanager.getUser();
+//            int level = user.getLevel();
 
             requireActivity().runOnUiThread(() -> {
                 streakDays.setText(currentStreak + "天");
@@ -469,8 +486,8 @@ public class CheckInFragment extends Fragment {
     }
 
     private void animateButtonToCheckedIn() {
-        int successColor = ContextCompat.getColor(requireContext(), R.color.check_in_success);
-        int currentColor = checkInButton.getBackgroundTintList() != null 
+        int successColor = ContextCompat.getColor(requireContext(), R.color.btn_plus_orange_yellow);
+        int currentColor = checkInButton.getBackgroundTintList() != null
             ? checkInButton.getBackgroundTintList().getDefaultColor() 
             : Color.parseColor("#FF9800");
 

@@ -1,20 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp">
 
-    <EditText
-        android:id="@+id/diary_title"
+    <!-- 1. 对应QT的QHBoxLayout：创建水平布局容器 -->
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="请输入标题"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:padding="8dp"
-        android:background="@android:color/transparent"
-        android:layout_marginTop="30dp"/>
+        android:layout_marginTop="30dp">
+
+        <EditText
+            android:id="@+id/diary_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:hint="请输入标题"
+            android:padding="8dp"
+            android:textSize="20sp"
+
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/ai_btn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/ai_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AI润色"
+            android:layout_marginStart="8dp"
+            android:background="@color/secondary"
+            app:layout_constraintStart_toEndOf="@+id/diary_title"
+            app:layout_constraintTop_toTopOf="@+id/diary_title"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <EditText
         android:id="@+id/diary_content"
