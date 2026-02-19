@@ -1,18 +1,25 @@
 package com.example.diaryapp.fragments;
 
 import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -51,12 +58,17 @@ public class CheckInFragment extends Fragment {
     private TextView monthCheckIns;
     private TextView capsuleCount;
     private TextView calendarMonth;
+    private TextView checkInItemsCount;
     // 自定义日历控件（已导入正确包，无标红）
     private CheckInCalendarView checkInCalendar;
 
     private Set<Long> checkedInDates;
     private boolean isTodayCheckedIn = false;
     private int currentStreak = 0;
+    private Handler updateHandler;
+    private Runnable updateRunnable;
+    private static final long UPDATE_DELAY_MS = 300;
+    private static final long MAX_UPDATE_DELAY_MS = 1000;
 
     private static final String[] MOLING_MESSAGES = {
             "今天也要加油哦！",
@@ -86,10 +98,12 @@ public class CheckInFragment extends Fragment {
         capsuleCount = view.findViewById(R.id.capsule_count);
         calendarMonth = view.findViewById(R.id.calendar_month);
         checkInCalendar = view.findViewById(R.id.check_in_calendar);
+        checkInItemsCount = view.findViewById(R.id.check_in_items_count);
 
         database = AppDatabase.getInstance(requireContext());
         checkInItemList = new ArrayList<>();
         checkedInDates = new HashSet<>();
+        updateHandler = new Handler(Looper.getMainLooper());
 
         checkInAdapter = new CheckInAdapter(checkInItemList, requireContext(), this::deleteCheckInItem);
         checkInRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
@@ -214,12 +228,12 @@ public class CheckInFragment extends Fragment {
             requireActivity().runOnUiThread(() -> {
                 isTodayCheckedIn = true;
                 updateCheckInUI();
-                molingImage.setBackgroundResource(R.drawable.ic_moling_excited); // 修正：兼容View的背景设置
+                performCheckInSuccessAnimation();
+                molingImage.setBackgroundResource(R.drawable.ic_moling_excited);
                 molingMessage.setText("打卡成功！太棒了！");
                 Toast.makeText(requireContext(), "打卡成功！", Toast.LENGTH_SHORT).show();
 
-                loadCheckInStatistics();
-                loadCheckedInDates(); // 打卡后立即更新日历
+                performImmediateUpdate();
             });
         }).start();
     }
@@ -246,11 +260,46 @@ public class CheckInFragment extends Fragment {
         new Thread(() -> {
             List<CheckInItem> items = database.checkInItemDao().getAllCheckInItems();
             requireActivity().runOnUiThread(() -> {
-                checkInItemList.clear();
-                checkInItemList.addAll(items);
-                checkInAdapter.updateData(checkInItemList);
+                updateCheckInItemsWithAnimation(items);
             });
         }).start();
+    }
+
+    private void updateCheckInItemsWithAnimation(List<CheckInItem> newItems) {
+        if (newItems == null) return;
+        
+        int oldSize = checkInItemList.size();
+        int newSize = newItems.size();
+        
+        checkInItemList.clear();
+        checkInItemList.addAll(newItems);
+        
+        if (checkInItemsCount != null) {
+            checkInItemsCount.setText(newSize + "项");
+        }
+        
+        if (oldSize == 0 && newSize > 0) {
+            checkInAdapter.notifyDataSetChanged();
+        } else {
+            checkInAdapter.updateData(checkInItemList);
+        }
+    }
+
+    private void scheduleDataUpdate() {
+        if (updateHandler != null) {
+            if (updateRunnable != null) {
+                updateHandler.removeCallbacks(updateRunnable);
+            }
+            updateRunnable = this::loadAllData;
+            updateHandler.postDelayed(updateRunnable, UPDATE_DELAY_MS);
+        }
+    }
+
+    private void performImmediateUpdate() {
+        if (updateHandler != null && updateRunnable != null) {
+            updateHandler.removeCallbacks(updateRunnable);
+        }
+        loadAllData();
     }
 
     private void loadCheckInStatistics() {
@@ -410,11 +459,65 @@ public class CheckInFragment extends Fragment {
             checkInStatus.setText("今日已打卡");
             checkInButton.setEnabled(false);
             checkInButton.setText("已打卡");
+            animateButtonToCheckedIn();
         } else {
             checkInStatus.setText("今日未打卡");
             checkInButton.setEnabled(true);
             checkInButton.setText("打卡");
+            animateButtonToUnchecked();
         }
+    }
+
+    private void animateButtonToCheckedIn() {
+        int successColor = ContextCompat.getColor(requireContext(), R.color.check_in_success);
+        int currentColor = checkInButton.getBackgroundTintList() != null 
+            ? checkInButton.getBackgroundTintList().getDefaultColor() 
+            : Color.parseColor("#FF9800");
+
+        ValueAnimator colorAnimator = ValueAnimator.ofArgb(currentColor, successColor);
+        colorAnimator.setDuration(400);
+        colorAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
+        colorAnimator.addUpdateListener(animator -> {
+            int color = (int) animator.getAnimatedValue();
+            checkInButton.setBackgroundTintList(ColorStateList.valueOf(color));
+        });
+        colorAnimator.start();
+
+        ObjectAnimator scaleX = ObjectAnimator.ofFloat(checkInButton, "scaleX", 1f, 1.05f, 1f);
+        ObjectAnimator scaleY = ObjectAnimator.ofFloat(checkInButton, "scaleY", 1f, 1.05f, 1f);
+        scaleX.setDuration(300);
+        scaleY.setDuration(300);
+        scaleX.setInterpolator(new DecelerateInterpolator());
+        scaleY.setInterpolator(new DecelerateInterpolator());
+        scaleX.start();
+        scaleY.start();
+    }
+
+    private void animateButtonToUnchecked() {
+        int defaultColor = ContextCompat.getColor(requireContext(), R.color.secondary);
+        int currentColor = checkInButton.getBackgroundTintList() != null 
+            ? checkInButton.getBackgroundTintList().getDefaultColor() 
+            : Color.parseColor("#4CAF50");
+
+        ValueAnimator colorAnimator = ValueAnimator.ofArgb(currentColor, defaultColor);
+        colorAnimator.setDuration(400);
+        colorAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
+        colorAnimator.addUpdateListener(animator -> {
+            int color = (int) animator.getAnimatedValue();
+            checkInButton.setBackgroundTintList(ColorStateList.valueOf(color));
+        });
+        colorAnimator.start();
+    }
+
+    private void performCheckInSuccessAnimation() {
+        ObjectAnimator scaleX = ObjectAnimator.ofFloat(checkInButton, "scaleX", 1f, 1.15f, 1f);
+        ObjectAnimator scaleY = ObjectAnimator.ofFloat(checkInButton, "scaleY", 1f, 1.15f, 1f);
+        scaleX.setDuration(350);
+        scaleY.setDuration(350);
+        scaleX.setInterpolator(new AccelerateDecelerateInterpolator());
+        scaleY.setInterpolator(new AccelerateDecelerateInterpolator());
+        scaleX.start();
+        scaleY.start();
     }
 
     private Date getTodayDate() {
@@ -431,7 +534,7 @@ public class CheckInFragment extends Fragment {
             database.checkInItemDao().delete(checkInItem);
             requireActivity().runOnUiThread(() -> {
                 Toast.makeText(requireContext(), "删除成功", Toast.LENGTH_SHORT).show();
-                loadCheckInItems();
+                performImmediateUpdate();
             });
         }).start();
     }
@@ -439,6 +542,24 @@ public class CheckInFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        loadAllData(); // 页面恢复时重新加载所有数据
+        performImmediateUpdate();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (updateHandler != null && updateRunnable != null) {
+            updateHandler.removeCallbacks(updateRunnable);
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (updateHandler != null) {
+            updateHandler.removeCallbacksAndMessages(null);
+            updateHandler = null;
+        }
+        updateRunnable = null;
     }
 }

@@ -1,54 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scroll_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
-
-    <EditText
-        android:id="@+id/check_in_item_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="请输入打卡项名称（如：喝水、准时睡觉、学习等）"
-        android:textSize="18sp"
-        android:padding="8dp"
-        android:background="@android:color/transparent"
-        android:layout_marginTop="40dp"/>
+    android:fillViewport="true"
+    android:overScrollMode="ifContentScrolls">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="32dp">
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:paddingBottom="32dp">
 
-        <TextView
-            android:id="@+id/cancel_button"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:text="取消"
-            android:textSize="16sp"
-            android:textColor="?attr/colorOnSurface"
-            android:background="@android:color/darker_gray"
-            android:gravity="center"
-            android:layout_marginEnd="8dp"
-            android:radius="8dp" />
+        <EditText
+            android:id="@+id/check_in_item_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="请输入打卡项名称（如：喝水、准时睡觉、学习等）"
+            android:textSize="18sp"
+            android:padding="8dp"
+            android:background="@android:color/transparent"
+            android:layout_marginTop="40dp"
+            android:inputType="textMultiLine"
+            android:maxLines="3"/>
 
-        <TextView
-            android:id="@+id/save_button"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:text="保存"
-            android:textSize="16sp"
-            android:textColor="@android:color/white"
-            android:background="@color/secondary"
-            android:gravity="center"
-            android:layout_marginStart="8dp"
-            android:radius="8dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="32dp">
+
+            <TextView
+                android:id="@+id/cancel_button"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:text="取消"
+                android:textSize="16sp"
+                android:textColor="?attr/colorOnSurface"
+                android:background="@android:color/darker_gray"
+                android:gravity="center"
+                android:layout_marginEnd="8dp"
+                android:radius="8dp" />
+
+            <TextView
+                android:id="@+id/save_button"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:text="保存"
+                android:textSize="16sp"
+                android:textColor="@android:color/white"
+                android:background="@color/secondary"
+                android:gravity="center"
+                android:layout_marginStart="8dp"
+                android:radius="8dp" />
         
+
+        </LinearLayout>
 
     </LinearLayout>
 
-</LinearLayout>
-
+</androidx.core.widget.NestedScrollView>

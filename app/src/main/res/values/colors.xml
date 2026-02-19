@@ -52,4 +52,7 @@
     <color name="nav_icon_selected_light">#FFAB40</color>   <!-- 白天选中：主色绿 -->
     <color name="nav_icon_unselected_dark">#FFAB40</color>   <!-- 夜间未选中：亮灰 -->
     <color name="nav_icon_selected_dark">#FFAB40</color>    <!-- 夜间选中：柔和绿 -->
+
+    <!-- 打卡成功状态颜色 -->
+    <color name="check_in_success">#4CAF50</color>         <!-- 打卡成功：治愈感绿色 -->
 </resources>

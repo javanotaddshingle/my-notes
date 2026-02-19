@@ -46,10 +46,15 @@ public class CheckInAdapter extends RecyclerView.Adapter<CheckInAdapter.CheckInV
         CheckInItem checkInItem = checkInItemList.get(position);
         holder.nameTextView.setText(checkInItem.getName());
 
-        // 检查今天是否已经打卡
+        holder.itemView.setAlpha(0f);
+        holder.itemView.animate()
+                .alpha(1f)
+                .setDuration(200)
+                .setStartDelay(position * 50)
+                .start();
+
         new Thread(() -> {
             Date today = new Date();
-            // 简化处理，只比较日期部分
             long todayMillis = today.getTime() / (24 * 60 * 60 * 1000);
             List<CheckInRecord> records = database.checkInRecordDao().getCheckInRecordsByItemId(checkInItem.getId());
             boolean isCheckedToday = false;
@@ -62,16 +67,12 @@ public class CheckInAdapter extends RecyclerView.Adapter<CheckInAdapter.CheckInV
             }
             final boolean finalIsCheckedToday = isCheckedToday;
             holder.checkBox.post(() -> {
-                // 先移除监听器，避免设置状态时触发
                 holder.checkBox.setOnCheckedChangeListener(null);
-                // 设置状态
                 holder.checkBox.setChecked(finalIsCheckedToday);
                 holder.checkBox.setEnabled(!finalIsCheckedToday);
-                // 再设置监听器
                 holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
                     if (isChecked) {
                         completeCheckIn(checkInItem, holder);
-                        // 打卡成功后禁用打卡框，避免用户取消勾选
                         holder.checkBox.setEnabled(false);
                     }
                 });
@@ -107,21 +108,16 @@ public class CheckInAdapter extends RecyclerView.Adapter<CheckInAdapter.CheckInV
             CheckInRecord record = new CheckInRecord(checkInItem.getId(), now, now);
             database.checkInRecordDao().insert(record);
             
-            // 更新用户经验值
             updateUserExperience(checkInItem.getExperiencePoints());
             
-            // 在UI线程上执行动画和提示
             holder.itemView.post(() -> {
-                // 执行打卡成功动画
                 performCheckInAnimation(holder.itemView);
-                // 显示打卡成功提示
                 showCheckInSuccessToast(checkInItem.getExperiencePoints());
             });
         }).start();
     }
     
     private void performCheckInAnimation(View view) {
-        // 创建缩放动画
         android.view.animation.ScaleAnimation scaleAnimation = new android.view.animation.ScaleAnimation(
             1.0f, 1.1f, 1.0f, 1.1f, 
             android.view.animation.Animation.RELATIVE_TO_SELF, 0.5f, 
@@ -131,18 +127,15 @@ public class CheckInAdapter extends RecyclerView.Adapter<CheckInAdapter.CheckInV
         scaleAnimation.setRepeatMode(android.view.animation.Animation.REVERSE);
         scaleAnimation.setRepeatCount(1);
         
-        // 创建淡入淡出动画
         android.view.animation.AlphaAnimation alphaAnimation = new android.view.animation.AlphaAnimation(1.0f, 0.7f);
         alphaAnimation.setDuration(200);
         alphaAnimation.setRepeatMode(android.view.animation.Animation.REVERSE);
         alphaAnimation.setRepeatCount(1);
         
-        // 创建动画集
         android.view.animation.AnimationSet animationSet = new android.view.animation.AnimationSet(true);
         animationSet.addAnimation(scaleAnimation);
         animationSet.addAnimation(alphaAnimation);
         
-        // 开始动画
         view.startAnimation(animationSet);
     }
     

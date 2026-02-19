@@ -167,7 +167,7 @@
                             android:text="本月打卡"
                             android:textColor="?attr/colorOnSurface"
                             android:textSize="12sp" />
-<!--android:id是枢纽-->
+
                         <TextView
                             android:id="@+id/month_check_ins"
                             android:layout_width="wrap_content"
@@ -212,14 +212,6 @@
                         android:layout_marginStart="12dp"
                         android:orientation="vertical">
 
-<!--                        <TextView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:text="时间胶囊"-->
-<!--                            android:textSize="14sp"-->
-<!--                            android:textStyle="bold"-->
-<!--                            android:textColor="?attr/colorOnSurface" />-->
-
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -251,24 +243,66 @@
 
             </androidx.cardview.widget.CardView>
 
-
-
-            <TextView
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="打卡项目"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="?attr/colorOnBackground"
-                android:layout_marginTop="1dp"
-                android:layout_marginBottom="12dp" />
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                app:cardBackgroundColor="?attr/colorSurface">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/check_in_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="false" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="12dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="打卡项目"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="?attr/colorOnSurface" />
+
+                        <TextView
+                            android:id="@+id/check_in_items_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0项"
+                            android:textSize="12sp"
+                            android:textColor="?attr/colorOnSurface"
+                            android:alpha="0.7" />
+
+                    </LinearLayout>
+
+                    <androidx.core.widget.NestedScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"
+                        android:fillViewport="true"
+                        android:overScrollMode="ifContentScrolls">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/check_in_list"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:nestedScrollingEnabled="false"
+                            android:clipToPadding="false"
+                            android:paddingBottom="8dp" />
+
+                    </androidx.core.widget.NestedScrollView>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
