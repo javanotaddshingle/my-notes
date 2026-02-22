@@ -96,8 +96,8 @@
                         android:layout_height="wrap_content"
                         android:text="打卡"
                         android:textSize="14sp"
-                        app:cornerRadius="20dp"
                         app:backgroundTint="?attr/colorPrimary"
+                        app:cornerRadius="20dp"
                         app:icon="@android:drawable/ic_input_add"
                         app:iconGravity="textStart" />
 
@@ -139,7 +139,7 @@
                             android:id="@+id/streak_days"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0天 level1"
+                            android:text="0天"
                             android:textSize="24sp"
                             android:textStyle="bold"
                             android:textColor="?attr/colorOnSurface"
@@ -193,54 +193,6 @@
                 app:cardElevation="2dp"
                 app:cardBackgroundColor="?attr/colorSurface">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="16dp"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:src="@drawable/ic_time_capsule"
-                        app:tint="?attr/colorPrimary" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginStart="12dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="记录美好时光"
-                            android:textSize="12sp"
-                            android:textColor="?attr/colorOnSurface"
-                            android:alpha="0.7" />
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/capsule_count"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0个"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:textColor="?attr/colorOnSurface"
-                        android:layout_marginEnd="8dp" />
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/ic_arrow_right"
-                        app:tint="?attr/colorOnSurface"
-                        android:alpha="0.5" />
-
-                </LinearLayout>
 
             </androidx.cardview.widget.CardView>
 

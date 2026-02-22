@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        // 管理导航页
         @Override
         public boolean onNavigationItemSelected(MenuItem item) {
             Fragment selectedFragment = null;

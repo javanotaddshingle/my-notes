@@ -58,6 +58,7 @@ public class DiaryFragment extends Fragment {
         diaryRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         diaryRecyclerView.setAdapter(diaryAdapter);
 
+//        页面跳转
         addDiaryButton.setOnClickListener(v -> {
             Intent intent = new Intent(requireContext(), DiaryEditActivity.class);
             startActivity(intent);

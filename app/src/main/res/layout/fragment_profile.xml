@@ -276,7 +276,7 @@ android:layout_marginHorizontal="16dp"
 android:layout_width="match_parent"
 android:layout_height="wrap_content"
 android:layout_marginBottom="16dp"
-android:text="功能解锁"
+android:text="功能解锁（全开放）"
 android:textSize="18sp"
 android:textStyle="bold" />
 
@@ -296,7 +296,7 @@ android:orientation="horizontal">
 <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="Lv.5解锁"
+    android:text="Lv.3解锁"
     android:textColor="@android:color/darker_gray"
     android:textSize="14sp" />
 </LinearLayout>
@@ -317,7 +317,7 @@ android:orientation="horizontal">
 <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="Lv.10解锁"
+    android:text="Lv.5解锁"
     android:textColor="@android:color/darker_gray"
     android:textSize="14sp" />
 </LinearLayout>
@@ -327,19 +327,7 @@ android:layout_width="match_parent"
 android:layout_height="wrap_content"
 android:orientation="horizontal">
 
-<TextView
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:layout_weight="1"
-    android:text="自定义打卡项"
-    android:textSize="16sp" />
 
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Lv.3解锁"
-    android:textColor="@android:color/darker_gray"
-    android:textSize="14sp" />
 </LinearLayout>
     </LinearLayout>
 

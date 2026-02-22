@@ -6,10 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.diaryapp.R;
 import com.example.diaryapp.activities.CheckInItemEditActivity;
+import com.example.diaryapp.activities.DiaryEditActivity;
 import com.example.diaryapp.database.AppDatabase;
 import com.example.diaryapp.models.CheckInItem;
 import com.example.diaryapp.models.CheckInRecord;
@@ -24,15 +26,17 @@ public class CheckInAdapter extends RecyclerView.Adapter<CheckInAdapter.CheckInV
     private OnCheckInDeleteListener deleteListener;
     private AppDatabase database;
 
+
     public interface OnCheckInDeleteListener {
         void onDelete(CheckInItem checkInItem);
     }
-
+    // 在构造函数中通过id绑定
     public CheckInAdapter(List<CheckInItem> checkInItemList, Context context, OnCheckInDeleteListener deleteListener) {
         this.checkInItemList = checkInItemList;
         this.context = context;
         this.deleteListener = deleteListener;
         this.database = AppDatabase.getInstance(context);
+
     }
 
     @Override
@@ -90,6 +94,12 @@ public class CheckInAdapter extends RecyclerView.Adapter<CheckInAdapter.CheckInV
                 deleteListener.onDelete(checkInItem);
             }
         });
+//        holder.llCheckInItem.setOnClickListener(v ->
+//        {
+//            Intent intent = new Intent(context, DiaryEditActivity.class);
+////            intent.putExtra("item_id",)
+//            context.startActivity(intent);
+//        });
     }
 
     @Override
@@ -153,12 +163,14 @@ public class CheckInAdapter extends RecyclerView.Adapter<CheckInAdapter.CheckInV
         TextView editButton;
         TextView deleteButton;
 
+
         CheckInViewHolder(View itemView) {
             super(itemView);
             nameTextView = itemView.findViewById(R.id.check_in_name);
             checkBox = itemView.findViewById(R.id.check_in_checkbox);
             editButton = itemView.findViewById(R.id.edit_button);
             deleteButton = itemView.findViewById(R.id.delete_button);
+//            llCheckInItem = itemView.findViewById(R.id.mei_hao_shi_guang_hai_tai);
         }
     }
 }
